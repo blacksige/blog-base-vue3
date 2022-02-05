@@ -1,4 +1,4 @@
-# vue3-typescript
+# blog-base-vue3
 
 ## Project setup
 ```
