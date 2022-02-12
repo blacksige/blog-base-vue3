@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="choice">
     <div class="content" id="list">
       <div class="box" v-for="item,index in textList" :key="index">{{item}}</div>
     </div>
@@ -134,7 +134,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.about{
+.choice{
   height: 500px;
   width: 500px;
   position: absolute;
@@ -171,7 +171,7 @@ button {
     align-items: center;
     position: absolute;
     left: 50%;
-    top: 80%;
+    bottom: 10%;
     transform: translate(-50%, -50%);
     overflow: hidden;
     background: linear-gradient(to right bottom, #687b8f, #171a1f);
