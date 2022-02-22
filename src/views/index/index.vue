@@ -18,27 +18,12 @@
     </ul>
     <el-dialog
       v-model="centerDialogVisible"
-      width="30%"
+      width="25%"
       center
       top='15vh'
       :show-close='false'
     >
-      <div class="dialog-style">
-        <div class="img-style">
-          <el-image
-            style="width: 100px; height: 150px"
-            :src="dialogList[itemId].url"
-            fit="fill"
-          ></el-image>
-        </div>
-        <div class="tips-style">
-          <ul>
-            <li class="name">{{dialogList[itemId].name}}</li>
-            <li class="tip">简介：{{dialogList[itemId].tip}}</li>
-            <li></li>
-          </ul>
-        </div>
-      </div>
+      <star-content :itemId="itemId"></star-content>
       <template #footer>
         <span class="dialog-footer">
           <el-button
@@ -54,23 +39,14 @@
 
 <script>
 import { defineComponent } from 'vue'
-
+import StarContent from '@/components/starContent.vue' // @ is an alias to /src
 export default defineComponent({
+  components: {
+    StarContent
+  },
   data () {
     return {
       centerDialogVisible: false,
-      dialogList: [
-        { id: 1, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 2, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 3, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 4, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 5, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 6, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 7, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 8, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 9, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' },
-        { id: 10, url: require('../../assets/logo.png'), name: '我吃西红柿', tip: '白金作家' }
-      ],
       itemId: null
     }
   },
@@ -82,7 +58,6 @@ export default defineComponent({
       } else {
         this.centerDialogVisible = true
         this.itemId = n - 1
-        console.log(this.dialogList[this.itemId])
       }
     }
   }
@@ -211,28 +186,6 @@ export default defineComponent({
         height: 150px;
         animation-delay: 0s;
         animation-duration: 11s;
-      }
-    }
-  }
-  .dialog-style {
-    display: flex;
-    flex-direction: row;
-    .tips-style {
-      flex: 1;
-      ul {
-        list-style: none;
-        height: 100%;
-        .name {
-          font-weight: 600;
-          font-size: 14px;
-        }
-        .tip {
-          font-size: 12px;
-        }
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-around;
       }
     }
   }
