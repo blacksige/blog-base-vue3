@@ -1,23 +1,23 @@
 <template>
   <div class="about">
-    <pdf msg="Welcome to Your Vue.js + TypeScript App"/>
+    <pdf msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import Pdf from '@/components/pdf.vue' // @ is an alias to /src
+import { Options, Vue } from "vue-class-component";
+import Pdf from "@/components/prf/pdf";
 
 @Options({
   components: {
-    Pdf
-  }
+    Pdf,
+  },
 })
 export default class About extends Vue {}
 </script>
 
 <style lang="less" scoped>
-.about{
+.about {
   width: 100%;
   height: 100%;
 }

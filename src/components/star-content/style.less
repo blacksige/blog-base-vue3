@@ -1,0 +1,39 @@
+.dialog-info {
+  display: flex;
+  flex-direction: row;
+  .tips-style {
+    flex: 1;
+    ul {
+      list-style: none;
+      height: 100%;
+      .name {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .tip {
+        font-size: 12px;
+      }
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-around;
+    }
+  }
+}
+.dialog-content {
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    li {
+      width: 25%;
+      margin-bottom: 8px;
+      border-radius: 3px;
+      border: 1px solid #41b883;
+    }
+  }
+}

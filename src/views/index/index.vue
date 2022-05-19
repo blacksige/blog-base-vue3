@@ -1,73 +1,60 @@
 <template>
   <div class="index">
     <ul class="circles">
-      <li
-        v-for="n in 10"
-        :key="n"
-        @click="onClickDialog(n)"
-      >
-        <div
-          v-show="n === 6"
-          class="six"
-        >点我</div>
-        <div
-          v-show="n === 1"
-          class="one"
-        >HELP!</div>
+      <li v-for="n in 10" :key="n" @click="onClickDialog(n)">
+        <div v-show="n === 6" class="six">点我</div>
+        <div v-show="n === 1" class="one">HELP!</div>
       </li>
     </ul>
     <el-dialog
       v-model="centerDialogVisible"
       width="25%"
       center
-      top='15vh'
-      :show-close='false'
+      top="15vh"
+      :show-close="false"
     >
       <star-content :itemId="itemId"></star-content>
       <template #footer>
         <span class="dialog-footer">
-          <el-button
-            type="primary"
-            @click="onClickDialog(n)"
-          >确 定
-          </el-button>
+          <el-button type="primary" @click="onClickDialog(n)">确 定 </el-button>
         </span>
       </template>
     </el-dialog>
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
-import StarContent from '@/components/starContent.vue' // @ is an alias to /src
+<script lang="ts">
+import { defineComponent } from "vue";
+import StarContent from "@/components/star-content/star-content"; // @ is an alias to /src
 export default defineComponent({
   components: {
-    StarContent
+    StarContent,
   },
-  data () {
+  data() {
     return {
       centerDialogVisible: false,
-      itemId: null
-    }
+      itemId: 0,
+    };
   },
   methods: {
-    onClickDialog (n) {
-      console.log(this.centerDialogVisible, n)
+    onClickDialog(n: number) {
+      console.log(this.centerDialogVisible, n);
       if (this.centerDialogVisible) {
-        this.centerDialogVisible = false
+        this.centerDialogVisible = false;
       } else {
-        this.centerDialogVisible = true
-        this.itemId = n - 1
+        this.centerDialogVisible = true;
+        this.itemId = n - 1;
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <style lang="less" scoped>
 .index {
   width: 100%;
   height: 100%;
+
   .circles {
     position: absolute;
     top: 0;
@@ -77,6 +64,7 @@ export default defineComponent({
     overflow: hidden;
     margin: 0px;
     padding: 0px;
+
     li {
       position: absolute;
       display: block;
@@ -90,6 +78,7 @@ export default defineComponent({
       animation: animate 25s linear infinite;
       bottom: -200px;
       cursor: pointer;
+
       .six {
         position: relative;
         left: 85%;
@@ -101,6 +90,7 @@ export default defineComponent({
         padding: 5px;
         background-color: white;
       }
+
       .one {
         position: relative;
         left: 85%;
@@ -112,22 +102,26 @@ export default defineComponent({
         padding: 2px;
         background-color: white;
       }
+
       @keyframes animate {
         0% {
           transform: translateY(0) rotate(0deg);
           opacity: 1;
         }
+
         100% {
           transform: translateY(-1000px) rotate(720deg);
           opacity: 0;
         }
       }
+
       &:nth-child(1) {
         left: 15%;
         width: 80px;
         height: 80px;
         animation-delay: 0s;
       }
+
       &:nth-child(2) {
         left: 5%;
         width: 20px;
@@ -135,12 +129,14 @@ export default defineComponent({
         animation-delay: 2s;
         animation-duration: 12s;
       }
+
       &:nth-child(3) {
         left: 70%;
         width: 20px;
         height: 20px;
         animation-delay: 4s;
       }
+
       &:nth-child(4) {
         left: 40%;
         width: 60px;
@@ -148,24 +144,28 @@ export default defineComponent({
         animation-delay: 0s;
         animation-duration: 18s;
       }
+
       &:nth-child(5) {
         left: 65%;
         width: 20px;
         height: 20px;
         animation-delay: 0s;
       }
+
       &:nth-child(6) {
         left: 75%;
         width: 150px;
         height: 150px;
         animation-delay: 3s;
       }
+
       &:nth-child(7) {
         left: 35%;
         width: 200px;
         height: 200px;
         animation-delay: 7s;
       }
+
       &:nth-child(8) {
         left: 50%;
         width: 25px;
@@ -173,6 +173,7 @@ export default defineComponent({
         animation-delay: 15s;
         animation-duration: 45s;
       }
+
       &:nth-child(9) {
         left: 20%;
         width: 15px;
@@ -180,6 +181,7 @@ export default defineComponent({
         animation-delay: 2s;
         animation-duration: 35s;
       }
+
       &:nth-child(10) {
         left: 85%;
         width: 150px;
@@ -190,6 +192,7 @@ export default defineComponent({
     }
   }
 }
+
 ::v-deep .el-dialog__header {
   display: none;
 }
