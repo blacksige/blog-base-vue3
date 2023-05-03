@@ -31,7 +31,7 @@ const screenH = ref(window.innerHeight);
       overflow: hidden;
     }
     &_left {
-      width: 300px;
+      width: 200px;
       border: 1px #4969C7 solid;
       background-color: #2B3557;
       height: 100%;

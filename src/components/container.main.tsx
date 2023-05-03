@@ -259,8 +259,13 @@ export default defineComponent({
             myChart = echarts.init(document.getElementById("container"));
             mapChart(true);
         });
-        return (): JSX.Element => {
-            return <div id="container" style={{ width: "100%", height: '100%' }}></div>
-        }
+        // return (): JSX.Element => {
+        //     return <div id="container" style={{ width: "100%", height: '100%' }}></div>
+        // }
+    },
+    render() {
+        return (
+            <div id="container" style={{ width: "100%", height: '100%' }}></div>
+        )
     }
 })
