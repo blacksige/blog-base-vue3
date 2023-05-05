@@ -19,7 +19,7 @@ export default defineComponent({
         let myChart: any = {};
         // 当前map名称
         let mapName = '全国';
-        //标签
+        // 标签
         const legendData = ["在办工单量", "已办工单量", "其他"];
         // 坐标
         const geoCoordMap: diyType = {
@@ -49,8 +49,7 @@ export default defineComponent({
             ["长沙", 10, 25, 30],
             ["南京", 10, 20, 5],
         ];
-
-
+        // 页面渲染
         const renderMap = (first = false) => {
             // const that = this as any;
             updateLoding(true)
@@ -223,8 +222,7 @@ export default defineComponent({
                     });
             }
         }
-
-        //展示对应的省
+        // 展示对应的省
         const showProvince = (eName: number, param: any) => {
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
@@ -244,8 +242,7 @@ export default defineComponent({
             xmlhttp.open("GET", `/map/province/${eName}.geoJson`, true);
             xmlhttp.send();
         }
-
-        //展示对应市
+        // 展示对应市
         const showCitys = (cName: number, param: any) => {
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
@@ -266,7 +263,6 @@ export default defineComponent({
             xmlhttp.open("GET", `/map/city/${cName}.geoJson`, true);
             xmlhttp.send();
         }
-
         // 返回全国视图
         const backMap = async () => {
             await nextTick()
@@ -274,7 +270,7 @@ export default defineComponent({
             console.log(mapName);
             renderMap();
         }
-
+        // loding
         const updateLoding = (flag: boolean) => {
             emit('openFullScreen', flag)
         };

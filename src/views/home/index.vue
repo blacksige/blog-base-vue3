@@ -5,7 +5,9 @@
       v-loading.fullscreen.lock="fullscreenLoading"
       element-loading-background="rgba(0, 0, 0, 0.7)"
     >
-      <div class="container_left"></div>
+      <div class="container_left">
+        <ContainerLeft ref="Left"></ContainerLeft>
+      </div>
       <div class="container_main">
         <ContainerMain
           ref="Main"
@@ -20,6 +22,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import ContainerMain from "../../components/container.main";
+import ContainerLeft from "../../components/container-left";
 import IframeDiv from "../../iframe/index.vue";
 import Menu from "../../components/menu.vue";
 const screenW = ref(window.innerWidth);
