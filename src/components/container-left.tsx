@@ -6,12 +6,13 @@ import dist from "../utils/dist";
 // console.log(findCityInfo('南宁市'));
 
 export default defineComponent({
-    setup() {
+    setup(props, {emit}) {
         let citys: Array<string> = [];
         citys = Object.keys(dist);
 
         const onChange = (info: any) => {
             console.log(findCityInfo(info)); 
+            emit('setCityInfo',info)
         }
 
         return {

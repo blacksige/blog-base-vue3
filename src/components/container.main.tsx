@@ -270,10 +270,14 @@ export default defineComponent({
             console.log(mapName);
             renderMap();
         }
+        // 地区选择
+        const setectCity = (name: string) => {
+            showProvince(provinces[name], name)
+        }
         // loding
         const updateLoding = (flag: boolean) => {
             emit('openFullScreen', flag)
-        };
+        }
 
         onMounted(() => {
             myChart = echarts.init(document.getElementById("container"));
@@ -282,6 +286,7 @@ export default defineComponent({
 
         return {
             backMap,
+            setectCity
         }
         // return (): JSX.Element => {
         //     return <div id="container" style={{ width: "100%", height: '100%' }}></div>

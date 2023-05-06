@@ -6,7 +6,7 @@
       element-loading-background="rgba(0, 0, 0, 0.7)"
     >
       <div class="container_left">
-        <ContainerLeft ref="Left"></ContainerLeft>
+        <ContainerLeft ref="Left" @setCityInfo="setCityInfo"></ContainerLeft>
       </div>
       <div class="container_main">
         <ContainerMain
@@ -38,6 +38,11 @@ const fullscreenLoading = ref(false);
 const openFullScreen = (flag: boolean) => {
   console.log(flag);
   fullscreenLoading.value = flag;
+};
+
+const setCityInfo = (name: string) => {
+  console.log(name);
+  Main.value.setectCity(name);
 };
 </script>
 
