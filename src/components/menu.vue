@@ -5,16 +5,19 @@
     </el-button>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item v-for="(item, key) in options" :key="key" @click="selectItem(item)">{{
-          item.content
-        }}</el-dropdown-item>
+        <el-dropdown-item
+          v-for="(item, key) in options"
+          :key="key"
+          @click="selectItem(item)"
+          >{{ item.content }}</el-dropdown-item
+        >
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
 
 <script lang="ts" setup>
-import { reactive,defineEmits } from "vue";
+import { reactive, defineEmits } from "vue";
 const emit = defineEmits(["itemClick"]);
 const options = reactive([
   {
@@ -32,10 +35,8 @@ const options = reactive([
 ]);
 const selectItem = (info: any) => {
   console.log(info);
-  if (info.value === 1) {
-    emit('itemClick',info)
-  }
-}
+  emit("itemClick", info);
+};
 </script>
 
 <style lang="less">

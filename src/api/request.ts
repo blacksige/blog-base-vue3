@@ -3,7 +3,7 @@ import axios from "axios";
 //底下的代码也是创建axios实例
 const requests = axios.create({
   //基础路径
-  baseURL: "/local",
+  baseURL: "/",
   //请求不能超过5S
   timeout: 5000,
 });

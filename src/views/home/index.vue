@@ -15,23 +15,30 @@
         ></ContainerMain>
       </div>
       <Menu @itemClick="itemClick"></Menu>
+      <Login :loginShow="loginShow"></Login>
     </div>
   </IframeDiv>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import ContainerMain from "../../components/container.main";
 import ContainerLeft from "../../components/container-left";
 import IframeDiv from "../../iframe/index.vue";
 import Menu from "../../components/menu.vue";
+import Login from "../../components/login.vue";
 const screenW = ref(window.innerWidth);
 const screenH = ref(window.innerHeight);
 
 const Main = ref();
-const itemClick = (info: unknown) => {
+let loginShow = reactive({value: false});
+const itemClick = (info: any) => {
   console.log(info);
-  Main.value.backMap();
+  if (info.value === 1) {
+    Main.value.backMap();
+  } else if (info.value === 2) {
+    loginShow.value = true;
+  }
 };
 
 const fullscreenLoading = ref(false);
