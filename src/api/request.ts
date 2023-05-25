@@ -21,7 +21,7 @@ requests.interceptors.response.use(
   },
   (err) => {
     //响应失败
-    alert("服务器响应数据失败");
+    console.error("服务器响应数据失败");
   }
 );
 export default requests;

@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser"); //body参数解析
 const app = express();
-var successApi = require('./utils/successApi')
+var index = require('./routes/index');
+
 
 app.use(bodyParser.urlencoded({ extended: false })); //parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); //parse application/json
@@ -20,22 +21,16 @@ app.all('*', function (req, res, next) {
     next();
 })
 
-const baseServer = '/study';
 //  主页输出 "Hello World"
-app.get("/", function (req, res) {
-    res.send("Hello GET");
-});
+app.get('/test', function (req, res, next) {
+    res.send('hello world!');
+  });
 
-app.post(`${baseServer}/login`, (req, res) => {
-    const result = successApi;
-    result.data = req.body
-    res.status(200).send(result)
-})
+app.use('/study', index)
 
-
-var server = app.listen(1438, function () {
-    var host = server.address().address;
+var server = app.listen(9999, function () {
+    // var host = server.address().address;
     var port = server.address().port;
 
-    console.log(`应用实例，访问地址为 http://${host}`, port);
-});
+    console.log(`端口`, port);
+})

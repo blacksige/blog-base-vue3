@@ -10,34 +10,40 @@
       </div>
       <div class="container_main">
         <ContainerMain
-          ref="Main"
+          ref="main"
+          :mode="mode"
+          :isShowPie="true"
+          :userInfo="userInfo"
           @openFullScreen="openFullScreen"
         ></ContainerMain>
       </div>
       <Menu @itemClick="itemClick"></Menu>
-      <Login :loginShow="loginShow"></Login>
+      <Login ref="login"></Login>
     </div>
   </IframeDiv>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { ref, computed, watch, reactive } from "vue";
+import { useStore } from "vuex";
 import ContainerMain from "../../components/container.main";
 import ContainerLeft from "../../components/container-left";
 import IframeDiv from "../../iframe/index.vue";
 import Menu from "../../components/menu.vue";
 import Login from "../../components/login.vue";
+import { getUserInfo } from "../../api/getUserInfo";
 const screenW = ref(window.innerWidth);
 const screenH = ref(window.innerHeight);
 
-const Main = ref();
-let loginShow = reactive({value: false});
+const main = ref();
+const login = ref();
+
 const itemClick = (info: any) => {
   console.log(info);
   if (info.value === 1) {
-    Main.value.backMap();
+    main.value.backMap();
   } else if (info.value === 2) {
-    loginShow.value = true;
+    login.value.dialogShow = true;
   }
 };
 
@@ -49,8 +55,29 @@ const openFullScreen = (flag: boolean) => {
 
 const setCityInfo = (name: string) => {
   console.log(name);
-  Main.value.setectCity(name);
+  main.value.setectCity(name);
 };
+
+let userInfo = reactive<Array<any>>([]);
+const getUserInfoHandle = () => {
+  getUserInfo({
+    uid: window.sessionStorage.getItem("uid"),
+  })
+    .then((result: any) => {
+      userInfo.length = 0;
+      userInfo.push(...result.data);
+    })
+    .catch((err: unknown) => {
+      console.log(err);
+    });
+};
+const store = useStore();
+const mode = computed(() => store.getters.getMode);
+watch(mode, (state: string) => {
+  if (state === "1") {
+    getUserInfoHandle();
+  }
+});
 </script>
 
 <style lang="less" scoped>

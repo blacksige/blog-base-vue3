@@ -1,4 +1,4 @@
-import { defineComponent, nextTick, onMounted } from "vue";
+import { defineComponent, nextTick, onMounted, watch } from "vue";
 import { provinces, cityMap } from "./config/main";
 import { diyType, option } from "../utils/type"
 import geoJson from '../utils/china.json';
@@ -9,12 +9,32 @@ require('echarts/lib/component/tooltip')
 require('echarts/lib/component/grid')
 require('echarts/lib/component/title')
 require('echarts/lib/component/legend')
+require('echarts/lib/component/visualMap')
+
 echarts.registerMap('全国', geoJson);
 
 /* 全局变量 */
 export default defineComponent({
+    props: {
+        isShowPie: {
+            type: Boolean,
+            default: false,
+        },
+        userInfo: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        }
+    },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     setup(props, { emit }) {
+        watch(props, (newprops) => {
+            if (Array.isArray(newprops.userInfo) && newprops.userInfo.length > 0) { 
+                backMap()
+            }
+        });
+
         // map实例
         let myChart: any = {};
         // 当前map名称
@@ -53,6 +73,7 @@ export default defineComponent({
         const renderMap = (first = false) => {
             // const that = this as any;
             updateLoding(true)
+            const bglist = props.userInfo || [];
             setTimeout(() => {
                 setOption(first)
                 updateLoding(false)
@@ -63,11 +84,21 @@ export default defineComponent({
                         myChart.resize();
                     });
 
-                const option = {
+                const option: any = {
                     animation: true,
                     // 地图背景颜色
                     tooltip: {
                         trigger: "axis",
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: 5000,
+                        calculable: true,
+                        seriesIndex: [0],
+                        inRange: {
+                            color: ['#4c91f7', '#004199'],
+                        },
+                        show: false,
                     },
                     geo: {
                         map: mapName,
@@ -107,7 +138,15 @@ export default defineComponent({
                     },
                     series: [],
                 };
-
+                const rltSeriesObj = {
+                    type: 'map',
+                    map: mapName,
+                    geoIndex: 0,
+                    aspectScale: 0.75,
+                    showLegendSymbol: false,
+                    animation: true,
+                    data: bglist,
+                }
                 function renderEachCity() {
                     const option: option = {
                         title: [],
@@ -123,7 +162,7 @@ export default defineComponent({
                             }
 
                         },
-                        series: [],
+                        series: [rltSeriesObj],
                     };
 
                     echarts.util.each(rawData, function (dataItem: any[], idx: string) {
@@ -163,9 +202,6 @@ export default defineComponent({
                                 normal: {
                                     show: false,
                                 },
-                                emphasis: {
-                                    show: true,
-                                },
                             },
                             lableLine: {
                                 normal: {
@@ -189,13 +225,19 @@ export default defineComponent({
                                     },
                                 },
                             },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                }
+                            },
                         });
                     });
+
                     myChart.setOption(option);
                 }
-                setTimeout(renderEachCity, 0);
-
+                props.isShowPie && setTimeout(renderEachCity, 0);
                 myChart.setOption(option);
+
 
                 // 点击触发
                 first &&
