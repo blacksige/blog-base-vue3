@@ -9,7 +9,7 @@ module.exports = {
     port: 9000,
     proxy: {
       "/study": {
-        target: "http://10.100.9.167:9999",
+        target: "http://10.100.0.190:9999",
         pathRerwrite: { "^/study": "/" },
       },
       // '/*': {

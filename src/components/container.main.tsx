@@ -1,4 +1,4 @@
-import { defineComponent, nextTick, onMounted, watch } from "vue";
+import { defineComponent, isProxy, isReactive, isRef, nextTick, onMounted, watch } from "vue";
 import { provinces, cityMap } from "./config/main";
 import { diyType, option } from "../utils/type"
 import geoJson from '../utils/china.json';
@@ -21,60 +21,40 @@ export default defineComponent({
             default: false,
         },
         userInfo: {
-            type: Array,
+            type: Object,
             default: () => {
-                return []
+                return {}
             }
-        }
+        },
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     setup(props, { emit }) {
-        watch(props, (newprops) => {
-            if (Array.isArray(newprops.userInfo) && newprops.userInfo.length > 0) { 
-                backMap()
-            }
-        });
+        watch(
+            props.userInfo,
+            (newProps) => {
+                console.log("userInfo changed.", newProps);
+                backMap();
+            },
+            { deep: true }
+        );
 
         // map实例
         let myChart: any = {};
         // 当前map名称
         let mapName = '全国';
-        // 标签
-        const legendData = ["在办工单量", "已办工单量", "其他"];
-        // 坐标
-        const geoCoordMap: diyType = {
-            北京: [116.41667, 39.91667],
-            上海: [121.43333, 34.5],
-            广州: [113.23333, 23.16667],
-            杭州: [120.2, 30.26667],
-            重庆: [106.45, 29.56667],
-            青岛: [120.33333, 36.06667],
-            厦门: [118.1, 24.46667],
-            福州: [119.3, 26.08333],
-            兰州: [103.73333, 36.03333],
-            长沙: [113.0, 28.21667],
-            南京: [118.78333, 32.05],
-        };
-        // 数据
-        const rawData = [
-            ["北京", 5, 20, 30],
-            ["上海", 10, 10, 30],
-            ["广州", 10, 50, 30],
-            ["杭州", 10, 20, 3],
-            ["重庆", 10, 20, 8],
-            ["青岛", 10, 20, 10],
-            ["厦门", 10, 20, 4],
-            ["福州", 10, 10, 30],
-            ["兰州", 10, 15, 30],
-            ["长沙", 10, 25, 30],
-            ["南京", 10, 20, 5],
-        ];
         // 页面渲染
         const renderMap = (first = false) => {
             // const that = this as any;
             updateLoding(true)
-            const bglist = props.userInfo || [];
+            const bglist = props.userInfo.cityInfo || [];
+            // 标签
+            const legendData = props.userInfo.legendData || [];
+            // 坐标
+            const geoCoordMap: diyType = props.userInfo.geoCoordMap || {};
+            // 数据
+            const rawData = props.userInfo.rawData || [];
             setTimeout(() => {
+                // console.log(bglist, legendData, geoCoordMap, rawData);
                 setOption(first)
                 updateLoding(false)
             }, 1500)
@@ -235,7 +215,9 @@ export default defineComponent({
 
                     myChart.setOption(option);
                 }
-                props.isShowPie && setTimeout(renderEachCity, 0);
+                if (props.isShowPie && rawData.length > 0 && legendData.length > 0 && Object.keys(geoCoordMap).length > 0) {
+                    setTimeout(renderEachCity, 0);
+                }
                 myChart.setOption(option);
 
 
@@ -326,9 +308,19 @@ export default defineComponent({
             renderMap(true);
         });
 
+        const getProps = () => {
+            console.log('getProps');
+            console.log(
+                isProxy(props.userInfo),
+                isReactive(props.userInfo),
+                isRef(props.userInfo)
+            );
+            
+        }
         return {
             backMap,
-            setectCity
+            setectCity,
+            getProps,
         }
         // return (): JSX.Element => {
         //     return <div id="container" style={{ width: "100%", height: '100%' }}></div>

@@ -1,5 +1,8 @@
 <template>
-  <el-dropdown class="btn_style" trigger="click">
+  <el-dropdown
+    class="btn_style"
+    trigger="click"
+  >
     <el-button type="primary">
       <el-icon><Menu /></el-icon>
     </el-button>
@@ -9,8 +12,9 @@
           v-for="(item, key) in options"
           :key="key"
           @click="selectItem(item)"
-          >{{ item.content }}</el-dropdown-item
         >
+          {{ item.content }}
+        </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>

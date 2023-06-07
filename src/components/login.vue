@@ -7,9 +7,17 @@
       :width="400"
     >
       <div class="contetn">
-        <el-input v-model="password" placeholder=""></el-input>
+        <el-input
+          v-model="password"
+          placeholder=""
+        />
         <div class="btn">
-          <el-button @click="submit" type="primary">确认</el-button>
+          <el-button
+            @click="submit"
+            type="primary"
+          >
+            确认
+          </el-button>
         </div>
       </div>
     </el-dialog>

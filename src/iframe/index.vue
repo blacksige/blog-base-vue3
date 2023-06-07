@@ -1,6 +1,9 @@
 <template>
   <div class="screen-adapter">
-    <div class="content-wrap" :style="style">
+    <div
+      class="content-wrap"
+      :style="style"
+    >
       <slot />
     </div>
   </div>

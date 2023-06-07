@@ -1,24 +1,30 @@
 <template>
-  <IframeDiv :w="screenW" :h="screenH">
+  <IframeDiv
+    :w="screenW"
+    :h="screenH"
+  >
     <div
       class="container"
       v-loading.fullscreen.lock="fullscreenLoading"
       element-loading-background="rgba(0, 0, 0, 0.7)"
     >
       <div class="container_left">
-        <ContainerLeft ref="Left" @setCityInfo="setCityInfo"></ContainerLeft>
+        <ContainerLeft
+          ref="Left"
+          @setCityInfo="setCityInfo"
+        />
       </div>
       <div class="container_main">
         <ContainerMain
           ref="main"
           :mode="mode"
-          :isShowPie="true"
-          :userInfo="userInfo"
+          :is-show-pie="true"
+          :user-info="userInfo"
           @openFullScreen="openFullScreen"
-        ></ContainerMain>
+        />
       </div>
-      <Menu @itemClick="itemClick"></Menu>
-      <Login ref="login"></Login>
+      <Menu @itemClick="itemClick" />
+      <Login ref="login" />
     </div>
   </IframeDiv>
 </template>
@@ -32,6 +38,7 @@ import IframeDiv from "../../iframe/index.vue";
 import Menu from "../../components/menu.vue";
 import Login from "../../components/login.vue";
 import { getUserInfo } from "../../api/getUserInfo";
+import { diyType } from "../../utils/type";
 const screenW = ref(window.innerWidth);
 const screenH = ref(window.innerHeight);
 
@@ -58,14 +65,20 @@ const setCityInfo = (name: string) => {
   main.value.setectCity(name);
 };
 
-let userInfo = reactive<Array<any>>([]);
+let userInfo = reactive<diyType>({});
+// let testInfo = reactive<Array<any>>([]);
 const getUserInfoHandle = () => {
   getUserInfo({
     uid: window.sessionStorage.getItem("uid"),
   })
     .then((result: any) => {
-      userInfo.length = 0;
-      userInfo.push(...result.data);
+      // Object.keys(result.data).forEach((key) => {
+      //   userInfo[key] = result.data[key];
+      // });
+      Object.assign(userInfo, result.data)
+      setTimeout(() => {
+        main.value.getProps();
+      }, 1000);
     })
     .catch((err: unknown) => {
       console.log(err);
